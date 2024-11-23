@@ -9,3 +9,9 @@
 1731792472110:help
 1731792497535:save-book "The Idiot" "Dostoyevsky" 1923
 1731792515125:find-all-books
+1732399541532:save-note "1" "john" "hip flexor stressor"
+1732399558436:save-note "1" "greg" "waist flexor stressor"
+1732399580523:save-note "2" "samantha" "waist tear"
+1732399587324:find-all-notes
+1732399789534:find-notes-by-owner "2"
+1732399792862:find-notes-by-owner "1"
