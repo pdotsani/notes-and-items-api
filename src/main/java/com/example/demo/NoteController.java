@@ -1,27 +1,23 @@
 package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
+import ai.peoplecode.OpenAIConversation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 public class NoteController {
     private NoteRepository noteRepository;
 
-    static class ItemWithNoteID extends Item {
-        Long noteId;
-        public ItemWithNoteID(String bodyPart, String muscles, Long noteId) {
-            super(bodyPart, muscles);
-            this.noteId = noteId;
-        }
-    }
+    @Autowired
+    private Environment env;
 
     public NoteController(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
@@ -37,15 +33,21 @@ public class NoteController {
         return "success";
     }
 
-//    @PostMapping("/addItemToNote")
-//    @CrossOrigin(origins = "*")
-//    public void addItemToNote(@RequestBody ItemWithNoteID item) {
-//        Optional<Note> note = this.noteRepository.findById(item.noteId);
-//        if (note.isPresent()) {
-//            Note n = note.get();
-//            n.addItem(item);
-//        }
-//    }
+    @PostMapping("/summarizeNotes")
+    @CrossOrigin(origins = "*")
+    public List<String> summarizeNotes(@RequestBody List<Item> items) {
+        String OPENAIKEY = env.getProperty("app.api-key");
+        OpenAIConversation conversation = new OpenAIConversation(OPENAIKEY, "gpt-4o-mini");
+        List<String> lines = new ArrayList<>();
+
+        for (Item item : items) {
+            String context = "body part: " + item.getBodyPart() + ". musscles involved: " + item.getMuscles();
+            String line = conversation.askQuestion(context, "can you create one brief paragraph with this information and this memo: " + item.getMemo());
+            lines.add(line);
+        }
+
+        return lines;
+    }
 
     @GetMapping("/getNotes")
     @CrossOrigin(origins = "*")

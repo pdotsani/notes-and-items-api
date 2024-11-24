@@ -12,11 +12,12 @@ public class Item {
 
     private String muscles;
 
-//    private Note note;
+    private String memo;
 
-    public Item(String bodyPart, String muscles) {
+    public Item(String bodyPart, String muscles, String memo) {
         this.bodyPart = bodyPart;
         this.muscles = muscles;
+        this.memo = memo;
     }
 
     public String getBodyPart() {
@@ -27,12 +28,15 @@ public class Item {
         return this.muscles;
     }
 
+    public String getMemo() { return this.memo; }
+
     @Override
     public String toString() {
         return "Item{" +
                 "id=" + id +
                 ", bodyPart='" + bodyPart + '\'' +
                 ", muscles='" + muscles + '\'' +
+                ", memo='" + memo + '\'' +
                 '}';
     }
 }

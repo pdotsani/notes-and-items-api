@@ -15,3 +15,11 @@
 1732399587324:find-all-notes
 1732399789534:find-notes-by-owner "2"
 1732399792862:find-notes-by-owner "1"
+1732407957688:find-all-notes
+1732408127613:save-note "sally" "the patient is good"
+1732408145094:save-note "1" "sally" "note here"
+1732417081312:find-notes-by-owner "1"
+1732417241249:summarize-item [{bodyPart:"leg",muscles:"hamstring",memo:"frequent knots"}]
+1732417308942:summarize-item [new Item("leg","hamstring")]
+1732417340584:Item i = new Item("leg","hamstring");
+1732417593259:summarize-item "leg" "hamstring" "tightness in the upper area"
